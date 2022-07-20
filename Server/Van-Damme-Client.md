@@ -1,6 +1,6 @@
-# Van-Damme client
+# Van-Damme Server 
 
-This clinet's purpose is to communicate with the Van-Damme tool through the **RPC (Remote Procedure Call)** protocol. The client will be written in **Python**.
+This server's purpose is to communicate with the Van-Damme tool through the **RPC (Remote Procedure Call)** protocol. The client will be written in **Python**.
 
 ###Features
 
