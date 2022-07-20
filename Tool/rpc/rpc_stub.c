@@ -10,6 +10,7 @@ int svc_create(int fd_socket) {
     while (1) {
         const struct RPC rpc = recv_rpc_message(fd_socket);
         unsigned char* result = svc_handler(rpc);
+        send(fd_socket, result, sizeof(result), MSG_CONFIRM);
     }
 }
 

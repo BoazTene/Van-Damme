@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "socket.h"
+#include "rpc/rpc_stub.h"
 
 int main(int argc, char const *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     } 
 
+    svc_create(socket_fd);
 
     return 0;
 }
