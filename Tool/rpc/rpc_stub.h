@@ -6,7 +6,7 @@
  * Note that the argument's size is 4092, because almost every network card supports 4096 bytes.
  */
 struct RPC {
-    int function_id;
+    unsigned int function_id;
     unsigned char arguments[4096 - sizeof(int)];
 };
 
