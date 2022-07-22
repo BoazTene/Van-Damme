@@ -1,5 +1,10 @@
 #include "rpc_stub.h"
 
+unsigned char* serialize(const struct Result result);
+unsigned char* svc_handler(const struct RPC rpc);
+const struct RPC deserialize(unsigned char *buff);
+const struct RPC recv_rpc_message(int fd_socket);
+
 /**
  * @brief The main rpc function, waits for new results from the server and calls the right function. 
  * 
@@ -7,11 +12,11 @@
  * @return int 
  */
 int svc_create(int fd_socket) {
-    while (1) {
-        const struct RPC rpc = recv_rpc_message(fd_socket);
-        unsigned char* result = svc_handler(rpc);
-        send(fd_socket, result, sizeof(result), MSG_CONFIRM);
-    }
+    const struct RPC rpc = recv_rpc_message(fd_socket);
+    unsigned char* result = svc_handler(rpc);
+    send(fd_socket, result, sizeof(result), MSG_CONFIRM);
+
+    return 0;
 }
 
 /**
@@ -22,6 +27,7 @@ int svc_create(int fd_socket) {
  */
 unsigned char* svc_handler(const struct RPC rpc) {
     printf("The %d function has been called!", rpc.function_id);
+    printf("The data is %s", rpc.arguments);
 
     struct Result result = {status: 1, data: "hello world"};
 
@@ -37,7 +43,7 @@ unsigned char* svc_handler(const struct RPC rpc) {
 const struct RPC recv_rpc_message(int fd_socket) {
     unsigned char buff[sizeof(struct RPC)];
 
-    recv(fd_socket, &buff, sizeof(buff), MSG_OOB);
+    recv(fd_socket, &buff, sizeof(buff), MSG_WAITALL);
 
     return (struct RPC) deserialize(buff);
 }
@@ -60,7 +66,7 @@ const struct RPC deserialize(unsigned char *buff) {
  * @param result 
  * @return unsigned* 
  */
-unsigned char* serialize(struct Result result) {
+unsigned char* serialize(const struct Result result) {
     ssize_t size = sizeof(struct Result);
 
     char buff[size];

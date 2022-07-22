@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "socket.h"
-#include "rpc/rpc_stub.h"
+#include "rpc_stub.h"
 
 int main(int argc, char const *argv[])
 {
@@ -12,6 +12,8 @@ int main(int argc, char const *argv[])
 
         exit(EXIT_FAILURE);
     } 
+
+    struct RPC test = {function_id: 3, arguments: "lala"};
 
     svc_create(socket_fd);
 

@@ -1,4 +1,5 @@
 #include <sys/socket.h>
+#include <string.h>
 
 /**
  * @brief The base structure of an RPC call.
@@ -6,7 +7,7 @@
  * Note that the argument's size is 4092, because almost every network card supports 4096 bytes.
  */
 struct RPC {
-    unsigned int function_id;
+    int function_id;
     unsigned char arguments[4096 - sizeof(int)];
 };
 
