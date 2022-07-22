@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=-I.
-DEPS = socket.h
+DEPS = socket.h rpc_stub.h
 LIBS=-lm
 ODIR=obj
 
-_OBJ = main.o socket.o 
+_OBJ = main.o socket.o rpc_stub.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.c $(DEPS)
