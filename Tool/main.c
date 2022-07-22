@@ -13,8 +13,6 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     } 
 
-    struct RPC test = {function_id: 3, arguments: "lala"};
-
     svc_create(socket_fd);
 
     return 0;
