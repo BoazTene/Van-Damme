@@ -1,19 +1,19 @@
 CC=gcc
-CFLAGS=-I.
-DEPS = socket.h rpc_stub.h
 LIBS=-lm
+CFLAGS=-I.
+INPUT=main.c rpc_stub.c socket.c rpc/shell.c
+DEPS=rpc_stub.h socket.h
 ODIR=obj
 
-_OBJ = main.o socket.o rpc_stub.o
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+OFILES=$(patsubst %.c,%.o,$(INPUT))
 
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+%.o: $(INPUT) $(DEPS)
+	$(CC) -c -o $(ODIR)/$(shell basename $@) $(patsubst %.o,%.c,$@) $(CFLAGS) 
 
-bin/main: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+bin/main: $(OFILES) 
+	$(CC) -o $@ $(patsubst %,$(ODIR)/%,$(foreach file,$^,$(shell basename $(file)))) $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o 
+	rm bin/main obj/*.o
