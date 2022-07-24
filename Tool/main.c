@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
         printf("The socket connection failed.");
 
         exit(EXIT_FAILURE);
-    } 
+    }
 
     svc_create(socket_fd);
 

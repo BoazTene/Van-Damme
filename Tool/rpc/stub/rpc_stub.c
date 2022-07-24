@@ -12,9 +12,20 @@ const struct RPC recv_rpc_message(int fd_socket);
  * @return int 
  */
 int svc_create(int fd_socket) {
-    const struct RPC rpc = recv_rpc_message(fd_socket);
-    unsigned char* result = svc_handler(rpc);
-    send(fd_socket, result, sizeof(result), MSG_CONFIRM);
+    while (1) {
+        const struct RPC rpc = recv_rpc_message(fd_socket);
+        int child_pid = fork();
+
+        // checking whether its the parent process.
+        if (child_pid > 0) {
+            continue;
+        } else if(child_pid < 0) { // making sure the fork syscall didn't returned any errors.
+            continue;
+        }
+
+        unsigned char* result = svc_handler(rpc);
+        send(fd_socket, result, sizeof(result), MSG_CONFIRM);
+    }
 
     return 0;
 }
@@ -27,9 +38,12 @@ int svc_create(int fd_socket) {
  */
 unsigned char* svc_handler(const struct RPC rpc) {
     printf("The %d function has been called!", rpc.function_id);
-    printf("The data is %s", rpc.arguments);
 
     struct Result result = {status: 1, data: "hello world"};
+
+    if (rpc.function_id == 1) { // shell function id.
+        rpc_shell(rpc);
+    }
 
     return serialize(result);
 }
