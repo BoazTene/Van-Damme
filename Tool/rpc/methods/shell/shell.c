@@ -1,4 +1,4 @@
-#include "rpc/shell.h"
+#include "rpc/methods/shell/shell.h"
 
 struct RPCShell shell_serialize(const struct RPC *rpc);
 struct sock_addr* get_address(const struct RPCShell shell);
