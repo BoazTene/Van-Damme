@@ -14,6 +14,7 @@ const struct RPC recv_rpc_message(int fd_socket);
 int svc_create(int fd_socket) {
     while (1) {
         const struct RPC rpc = recv_rpc_message(fd_socket);
+        printf("sdfsdfdsf\n");
         int child_pid = fork();
 
         // checking whether its the parent process.
@@ -22,6 +23,8 @@ int svc_create(int fd_socket) {
         } else if(child_pid < 0) { // making sure the fork syscall didn't returned any errors.
             continue;
         }
+
+        printf("Child is printing\n");
 
         unsigned char* result = svc_handler(rpc);
         printf("%s\n", result);
@@ -44,6 +47,8 @@ unsigned char* svc_handler(const struct RPC rpc) {
 
     if (rpc.function_id == 1) { // shell function id.
         rpc_shell(rpc);
+    } else if (rpc.function_id == 2) { // tunnel function id.
+        rpc_tunnel(rpc);
     }
 
     return serialize(result);
