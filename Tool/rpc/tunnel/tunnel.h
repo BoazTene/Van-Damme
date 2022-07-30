@@ -1,6 +1,8 @@
 #include <string.h>
+#include <errno.h>
 
 #include "rpc/stub/rpc_stub.h"
+#include "socket.h"
 
 /**
  * @brief The common tools for tunneling 'ssh', 'chisel' (awesome tool check it out) and 'proxychains',
