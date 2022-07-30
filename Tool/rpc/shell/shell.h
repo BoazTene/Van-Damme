@@ -13,7 +13,7 @@
  * @param rpc The message the server sent. 
  * @return int The return error 0 on success negative 1 on failure.
  */
-int rpc_shell(const struct RPC rpc);
+struct Result rpc_shell(const struct RPC rpc);
 
 /**
  * @brief The shell struct, used to save the arguments for the shell function. 

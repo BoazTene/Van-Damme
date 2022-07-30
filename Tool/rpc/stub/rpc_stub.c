@@ -24,7 +24,8 @@ int svc_create(int fd_socket) {
         }
 
         unsigned char* result = svc_handler(rpc);
-        send(fd_socket, result, sizeof(result), MSG_CONFIRM);
+        printf("%s\n", result);
+        send(fd_socket, &result, sizeof(result), MSG_CONFIRM);
     }
 
     return 0;
