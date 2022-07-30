@@ -7,7 +7,7 @@ int main(int argc, char const *argv[])
 {
     int socket_fd = create_socket();
 
-    if (connect_socket(socket_fd, "localhost") == -1) {
+    if (connect_socket(socket_fd, "localhost", PORT) == -1) {
         printf("The socket connection failed.");
 
         exit(EXIT_FAILURE);
