@@ -20,4 +20,13 @@ int create_socket();
  * @param ip The ip of the remote server, for example: 192.168.1.1 
  * @return int 0 on success, see man connect for details. 
  */
-int connect_socket(int socket_fd, char *ip);
+int connect_socket(int socket_fd, char *ip, int port);
+
+/**
+ * @brief Create a sockaddr object
+ * 
+ * @param ip 
+ * @param port 
+ * @return struct sockaddr_in 
+ */
+struct sockaddr_in create_sockaddr(char *ip, int port);
