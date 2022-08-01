@@ -13,24 +13,65 @@ int rpc_tunnel(struct RPC rpc) {
 
     // connect to the tunnel_port.
     int tunnel_fd = create_socket();
+
     if ((connect_socket(tunnel_fd, tunnel.local.address, tunnel.tunnel_port)) != 0) {
         // The connection failed.
         return -1;
     }
+    
+    if (tunnel.reversed) { // in case the tunnel is reversed.
+        handle_reversed_tunnel(tunnel, tunnel_fd);
+    } else { // in case the tunnel is not reversed.
+        handle_unreversed_tunnel(tunnel, tunnel_fd);
+    }
 
+    return 0;
+}
+
+/**
+ * @brief Handles unreversed tunnel, connects to the desired service and forwards the packets to the tunnel port. 
+ * 
+ * @param tunnel 
+ * @param tunnel_fd 
+ * @return int 
+ */
+int handle_unreversed_tunnel(struct RPCTunnel tunnel, int tunnel_fd) {
     int service_fd = socket(AF_INET, SOCK_STREAM, 0);
+
     if ((connect_socket(service_fd, tunnel.remote.address, tunnel.remote.port) != 0)) {
         // The service connection failed.
-
-        close(tunnel_fd);
         close(service_fd);
 
         return -1;
     }
 
     tunnel_handler(tunnel_fd, service_fd);
-
+    
     return 0;
+}
+
+/**
+ * @brief Handles a reversed tunnel, creates a socket server at the desire port and address.
+ * 
+ * @param tunnel 
+ * @return int 
+ */
+int handle_reversed_tunnel(struct RPCTunnel tunnel, int tunnel_fd) {
+    int service_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+    struct sockaddr_in address = create_sockaddr(tunnel.remote.address, tunnel.remote.port);
+
+    bind(service_fd, &address, sizeof(address));
+
+    listen(service_fd, 5);
+
+    while (1) {
+        int client_fd = accept(service_fd, &address, sizeof(address));
+
+        tunnel_handler(tunnel_fd, client_fd);
+    }
+
+    return service_fd;
 }
 
 /**
@@ -42,18 +83,22 @@ int rpc_tunnel(struct RPC rpc) {
  */
 int tunnel_handler(int tunnel_fd, int service_fd) {
     char buffer[4096];
+    int bytes_recv;
     memset(buffer, 0x00, sizeof(buffer));
 
     while (1) {
-
-        if ((recv(tunnel_fd, buffer, sizeof(buffer), MSG_DONTWAIT) > 0)) {
+        if ((bytes_recv = recv(tunnel_fd, buffer, sizeof(buffer), MSG_DONTWAIT) > 0)) {
             send(service_fd, buffer, sizeof(buffer), MSG_CONFIRM);
             memset(buffer, 0x00, sizeof(buffer));
-        } 
+        } else if (bytes_recv == -1) {
+            return -1;
+        }
 
-        if ((recv(service_fd, buffer, sizeof(buffer), MSG_DONTWAIT) > 0)) {
+        if (bytes_recv = (recv(service_fd, buffer, sizeof(buffer), MSG_DONTWAIT) > 0)) {
             send(tunnel_fd, buffer, sizeof(buffer), MSG_CONFIRM);       
             memset(buffer, 0x00, sizeof(buffer));
+        } else if(bytes_recv == -1) {
+            return 01;
         }
     }
 }

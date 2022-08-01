@@ -1,5 +1,6 @@
 #include <string.h>
 #include <errno.h>
+#include <netinet/in.h>
 
 #include "rpc/stub/rpc_stub.h"
 #include "socket.h"
