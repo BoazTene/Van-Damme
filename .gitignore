@@ -1,3 +1,4 @@
 .vscode
-Tool/obj
+**/obj
 **/bin
+**/test

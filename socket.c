@@ -47,3 +47,20 @@ int connect_socket(int socket_fd, char *ip, int port) {
     return connect(socket_fd, &address, sizeof(address));
 }
 
+/**
+ * @brief Starts a socket server (binds + listen).
+ * 
+ * @param socket_fd 
+ * @return int 
+ */
+int start_server(int socket_fd, struct sockaddr_in address, int address_size) {
+    if (bind(socket_fd, &address, address_size) < 0) { 
+        return -1;
+    }
+
+    if (listen(socket_fd, 5) < 0) {
+        return -1;
+    }
+
+    return 0;
+}

@@ -30,3 +30,13 @@ int connect_socket(int socket_fd, char *ip, int port);
  * @return struct sockaddr_in 
  */
 struct sockaddr_in create_sockaddr(char *ip, int port);
+
+/**
+ * @brief Starts a socket server (binds + listen).
+ * 
+ * @param socket_fd 
+ * @param ip 
+ * @param port 
+ * @return int 
+ */
+int start_server(int socket_fd, struct sockaddr_in address, int address_size);
