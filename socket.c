@@ -35,6 +35,24 @@ struct sockaddr_in create_sockaddr(char *ip, int port) {
 }
 
 /**
+ * @brief Create a address object from and sockaddr_in object
+ * 
+ * @param sockaddr 
+ * @return struct Address 
+ */
+struct Address create_address(struct sockaddr_in sockaddr) {
+    struct Address address;
+
+    char ip[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &sockaddr.sin_addr, ip, INET_ADDRSTRLEN);
+   
+    address.port = ntohs(sockaddr.sin_port);
+    strcpy(address.ip, ip);
+
+    return address;
+}
+
+/**
  * @brief Connect to the remote server. 
  * 
  * @param socket_fd The socket file descriptor. 

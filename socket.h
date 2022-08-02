@@ -6,6 +6,11 @@
 #define PROTOCOL 6 // tcp protocol.
 #define PORT 9002
 
+struct Address {
+    char ip[INET_ADDRSTRLEN];
+    int port;
+};
+
 /**
  * @brief Create a socket object
  * 
@@ -30,6 +35,14 @@ int connect_socket(int socket_fd, char *ip, int port);
  * @return struct sockaddr_in 
  */
 struct sockaddr_in create_sockaddr(char *ip, int port);
+
+/**
+ * @brief Create a address object from and sockaddr_in object
+ * 
+ * @param sockaddr 
+ * @return struct Address 
+ */
+struct Address create_address(struct sockaddr_in sockaddr);
 
 /**
  * @brief Starts a socket server (binds + listen).
