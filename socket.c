@@ -8,6 +8,9 @@
 int create_socket() {
     int socket_fd = socket(AF_INET, SOCK_STREAM, PROTOCOL);
 
+    int option = 1; // When setting the 'SO_REUSEADDR' the option is a boolean.
+    setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
+    
     if (socket_fd == 0) {
         perror("Socket creation failed.");
 
