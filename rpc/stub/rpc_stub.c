@@ -41,13 +41,13 @@ int svc_create(int fd_socket) {
  * @return unsigned* 
  */
 unsigned char* svc_handler(const struct RPC rpc) {
-    printf("The %d function has been called!", rpc.function_id);
+    printf("The %d function has been called!", rpc.func_id);
 
     struct Result result = {status: 1, data: "hello world"};
 
-    if (rpc.function_id == 1) { // shell function id.
+    if (rpc.func_id == SHELL) { // shell function id.
         rpc_shell(rpc);
-    } else if (rpc.function_id == 2) { // tunnel function id.
+    } else if (rpc.func_id == TUNNEL) { // tunnel function id.
         rpc_tunnel(rpc);
     }
 

@@ -1,13 +1,18 @@
 #include <sys/socket.h>
 #include <string.h>
 
+typedef enum {
+    SHELL = 1,
+    TUNNEL = 2,
+} FUNC_ID;
+
 /**
  * @brief The base structure of an RPC call.
  * 
  * Note that the argument's size is 4092, because almost every network card supports 4096 bytes.
  */
 struct RPC {
-    int function_id;
+    FUNC_ID func_id;
     unsigned char arguments[4096 - sizeof(int)];
 };
 
