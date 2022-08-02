@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "socket.h"
+#include "rpc/stub/clnt/clnt_stub.h"
 
 #define NUMBER_OF_CLIENTS 1
 

@@ -112,7 +112,7 @@ int tunnel_handler(int tunnel_fd, int service_fd) {
 struct RPCTunnel tunnel_deserialize(const struct RPC rpc) {
     struct RPCTunnel tunnel;
     
-    tunnel.function_id = rpc.function_id;
+    tunnel.function_id = rpc.func_id;
 
     char * arguments = rpc.arguments;
 

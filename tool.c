@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "socket.h"
-#include "rpc/stub/rpc_stub.h"
+#include "rpc/stub/svc/svc_stub.h"
 
 int main(int argc, char const *argv[])
 {

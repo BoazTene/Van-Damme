@@ -5,7 +5,7 @@
 // #include <unistd.h>
 
 #include "socket.h"
-#include "rpc/stub/rpc_stub.h"
+#include "rpc/stub/svc/svc_stub.h"
 
 /**
  * @brief This is an RPC function, this function is used to connect to a reverse shell in new process.

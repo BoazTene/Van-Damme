@@ -1,10 +1,7 @@
 #include <sys/socket.h>
 #include <string.h>
 
-typedef enum {
-    SHELL = 1,
-    TUNNEL = 2,
-} FUNC_ID;
+#include "rpc/stub/stub.h"
 
 /**
  * @brief The base structure of an RPC call.

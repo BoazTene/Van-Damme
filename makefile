@@ -1,8 +1,8 @@
 CC=gcc
 LIBS=-lm
 CFLAGS=-I.
-INPUT_DEPS = rpc/stub/rpc_stub.c socket.c rpc/shell/shell.c rpc/tunnel/tunnel.c
-DEPS=rpc/stub/rpc_stub.h socket.h rpc/shell/shell.h rpc/tunnel/tunnel.h
+INPUT_DEPS = rpc/stub/svc/svc_stub.c rpc/stub/clnt/clnt_stub.c socket.c rpc/shell/shell.c rpc/tunnel/tunnel.c
+DEPS = rpc/stub/stub.h rpc/stub/svc/svc_stub.h rpc/stub/clnt/clnt_stub.h socket.h rpc/shell/shell.h rpc/tunnel/tunnel.h
 ODIR=obj
 
 OFILES=$(patsubst %.c,%.o,$(INPUT_DEPS))

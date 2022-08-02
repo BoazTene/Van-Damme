@@ -1,4 +1,4 @@
-#include "rpc/stub/rpc_stub.h"
+#include "rpc/stub/svc/svc_stub.h"
 
 unsigned char* serialize(const struct Result result);
 unsigned char* svc_handler(const struct RPC rpc);
