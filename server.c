@@ -12,7 +12,6 @@ int main(int argc, char const *argv[])
 
     int server_fd = create_socket();
     struct sockaddr_in address = create_sockaddr(ip, PORT);
-    struct sockaddr_in client;
 
     if (start_server(server_fd, address, sizeof(address)) == -1) {
         perror("Server creation failed.\n");
@@ -21,11 +20,13 @@ int main(int argc, char const *argv[])
 
     printf("Starting server...\n");
 
-    int client_size = sizeof(client);
-
     while (1) {
-        int client_fd = accept(server_fd, (struct sockaddr*)&client, &client_size);
-        printf("A client just connected\n");
+        struct sockaddr_in client_sockaddr;
+        int c_size = sizeof(client_sockaddr);
+        int client_fd = accept(server_fd, &client_sockaddr, &c_size);
+        struct Address address = create_address(client_sockaddr);
+
+        printf("Client just connected (%s, %d)\n", address.ip, address.port);
 
         close(client_fd);
     }
