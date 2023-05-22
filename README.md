@@ -1,2 +1,2 @@
 # Van-Damme
-This is a backdoor tool, it's going to being written in C. 
+A custom made backdoor tool maily destinated for CTF's
